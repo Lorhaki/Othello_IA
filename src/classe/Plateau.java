@@ -13,6 +13,7 @@ public class Plateau {
 	private ArrayList<CoupPossible> listeNoir;
 	//cases 1 pour blanc et 2 pour noir
 
+
 	//Constructeur pour initailaiser un plateau classique d'Othello
 	//On considére que le 1 c'est pour les blancs et 2 pour les noirs
 	public Plateau(){
