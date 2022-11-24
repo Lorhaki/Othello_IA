@@ -127,9 +127,10 @@ public class Plateau {
 		return true;
 	}
 
-	public void mettreAjourLePlateau() {
-		
+	public void mettreAjourLePlateau(int x, int y, int couleur) {
+		cases[x][y]=couleur;
 	}
+
 	public void JouerUnCoup(int i , int j) {
 		
 	}
