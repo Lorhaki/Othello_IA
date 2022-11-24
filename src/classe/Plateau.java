@@ -9,8 +9,8 @@ public class Plateau {
 	private int i , j ;
 	private int nbrBlanc , nbrNoir , nbrVide ;
 	//Liste des coups possibles pour les pions noir et blanc
-	private ArrayList<CoupPossible> ListeBlanc;
-	private ArrayList<CoupPossible> ListeNoir;
+	private ArrayList<CoupPossible> listeBlanc;
+	private ArrayList<CoupPossible> listeNoir;
 	//cases 1 pour blanc et 2 pour noir
 
 	//Constructeur pour initailaiser un plateau classique d'Othello
@@ -32,8 +32,8 @@ public class Plateau {
 	this.NbrBlanc();
 	this.NbrNoir();
 	this.NbrVide();
-	this.ListeBlanc = new ArrayList<>();
-	this.ListeNoir = new ArrayList<>();
+	this.listeBlanc = new ArrayList<>();
+	this.listeNoir = new ArrayList<>();
 	
 	}
 	
@@ -180,7 +180,7 @@ public class Plateau {
 		return false;
 	}
 	
-public boolean regardeAutourBlanc(int i , int j) {
+	public boolean regardeAutourBlanc(int i , int j) {
 
 	if(this.cases [i+1][j+1] == 2) {
 		if(this.coupEstPossible(i+1,j+1,2,1,1)){
@@ -275,21 +275,39 @@ public boolean regardeAutourBlanc(int i , int j) {
 		this.nbrVide = nbrVide;
 	}
 	public ArrayList<CoupPossible> getListeBlanc() {
-		return ListeBlanc;
+		return listeBlanc;
 	}
 
+	public void majCoupPossibleBlanc(){
+		listeBlanc.clear();
+		for (int a=0;a<i;a++){
+			for(int b=0;b<j;b++){
+				if(this.coupPossibleBlanc(a,b));
+			}
+		}
+	}
+
+	public void majCoupPossibleNoir(){
+		listeNoir.clear();
+		for (int a=0;a<i;a++){
+			for(int b=0;b<j;b++){
+				if(this.coupPossibleNoir(a,b));
+			}
+		}
+	}
 
 	public void setListeBlanc(ArrayList<CoupPossible> listeBlanc) {
-		ListeBlanc = listeBlanc;
+		listeBlanc = listeBlanc;
 	}
 
 
 	public ArrayList<CoupPossible> getListeNoir() {
-		return ListeNoir;
+
+		return listeNoir;
 	}
 
 
 	public void setListeNoir(ArrayList<CoupPossible> listeNoir) {
-		ListeNoir = listeNoir;
+		listeNoir = listeNoir;
 	}
 }
