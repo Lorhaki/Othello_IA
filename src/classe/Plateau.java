@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+package classe;
 
 import java.util.ArrayList;
 
@@ -11,7 +11,8 @@ public class Plateau {
 	//Liste des coups possibles pour les pions noir et blanc
 	private ArrayList<CoupPossible> ListeBlanc;
 	private ArrayList<CoupPossible> ListeNoir;
-	
+	//cases 1 pour blanc et 2 pour noir
+
 	//Constructeur pour initailaiser un plateau classique d'Othello
 	//On considére que le 1 c'est pour les blancs et 2 pour les noirs
 	public Plateau(){
@@ -104,7 +105,6 @@ public class Plateau {
 	}
 	
 	public boolean coupPossibleNoir(int i , int j){
-		boolean a = false;
 		
 		return a ; 
 	}
@@ -113,6 +113,20 @@ public class Plateau {
 		
 		return a ; 
 	}
+
+	public boolean coupPossible(int x, int y, int couleur, int dirx, int diry){
+		if((x + dirx < 0) && (x+dirx>=i) && (y + diry < 0) && (y+diry>=j)){
+			return false;
+		}
+		if(cases[x + dirx][y + diry] == 0){
+			return false;
+		}
+		if(cases[x + dirx][y + diry] == couleur){
+			return coupPossible(x + dirx,y+diry,couleur, dirx, diry);
+		}
+		return true;
+	}
+
 	public void mettreAjourLePlateau() {
 		
 	}

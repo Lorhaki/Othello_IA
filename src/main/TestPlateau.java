@@ -1,3 +1,7 @@
+package main;
+
+import classe.Plateau;
+
 public class TestPlateau {
 
 	public static void main(String[] args) {

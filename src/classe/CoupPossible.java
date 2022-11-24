@@ -1,8 +1,8 @@
+package classe;
 
 public class CoupPossible {
 	int x , y ;
-	
-	
+
 	
 	public CoupPossible() {
 		 this.x = 0 ;
