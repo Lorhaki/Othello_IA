@@ -32,8 +32,8 @@ public class Plateau {
 	this.NbrBlanc();
 	this.NbrNoir();
 	this.NbrVide();
-	this.ListeBlanc = new ArrayList<CoupPossible>();
-	this.ListeNoir = new ArrayList<CoupPossible>();
+	this.ListeBlanc = new ArrayList<>();
+	this.ListeNoir = new ArrayList<>();
 	
 	}
 	
@@ -114,7 +114,7 @@ public class Plateau {
 		return a ; 
 	}
 
-	public boolean coupPossible(int x, int y, int couleur, int dirx, int diry){
+	public boolean coupEstPossible(int x, int y, int couleur, int dirx, int diry){
 		if((x + dirx < 0) && (x+dirx>=i) && (y + diry < 0) && (y+diry>=j)){
 			return false;
 		}
@@ -122,7 +122,7 @@ public class Plateau {
 			return false;
 		}
 		if(cases[x + dirx][y + diry] == couleur){
-			return coupPossible(x + dirx,y+diry,couleur, dirx, diry);
+			return coupEstPossible(x + dirx,y+diry,couleur, dirx, diry);
 		}
 		return true;
 	}
@@ -136,59 +136,90 @@ public class Plateau {
 	
 	
 	public boolean regardeAutourNoir(int i , int j) {
-		ArrayList<Boolean> liste = new ArrayList<>();
 		if(this.cases [i+1][j+1] == 1) {
-			return true ;
+			if(this.coupEstPossible(i+1,j+1,1,1,1)){
+				return true;
+			}
 		}
 		if(this.cases [i+1][j] == 1) {
-			return true ;
+			if(this.coupEstPossible(i+1,j,1,1,0)){
+				return true;
+			}
 		}
 		if(this.cases [i][j+1] == 1) {
-			return true ;
+			if(this.coupEstPossible(i,j+1,1,0,1)){
+				return true;
+			}
 		}
 		if(this.cases [i-1][j-1] == 1) {
-			return true ;
+			if(this.coupEstPossible(i-1,j-1,1,-1,-1)){
+				return true;
+			}
 		}
 		if(this.cases [i-1][j] == 1) {
-			return true ;
+			if(this.coupEstPossible(i-1,j,1,-1,0)){
+				return true;
+			}
 		}
 		if(this.cases [i][j-1] == 1) {
-			return true ;
+			if(this.coupEstPossible(i,j-1,1,0,-1)){
+				return true;
+			}
 		}
 		if(this.cases [i+1][j-1] == 1) {
-			return true ;
+			if(this.coupEstPossible(i+1,j-1,1,1,-1)){
+				return true;
+			}
 		}
 		if(this.cases [i-1][j+1] == 1) {
-			return true ;
+			if(this.coupEstPossible(i-1,j+1,1,-1,+1)){
+				return true;
+			}
 		}
 		return false;
 	}
 	
 public boolean regardeAutourBlanc(int i , int j) {
-		
+
 	if(this.cases [i+1][j+1] == 2) {
-		return true ;
+		if(this.coupEstPossible(i+1,j+1,2,1,1)){
+			return true;
+		}
 	}
 	if(this.cases [i+1][j] == 2) {
-		return true ;
+		if(this.coupEstPossible(i+1,j,1,2,0)){
+			return true;
+		}
 	}
 	if(this.cases [i][j+1] == 2) {
-		return true ;
+		if(this.coupEstPossible(i,j+1,2,1,1)){
+			return true;
+		}
 	}
 	if(this.cases [i-1][j-1] == 2) {
-		return true ;
+		if(this.coupEstPossible(i-1,j-1,2,-1,-1)){
+			return true;
+		}
 	}
 	if(this.cases [i-1][j] == 2) {
-		return true ;
+		if(this.coupEstPossible(i-1,j,2,-1,0)){
+			return true;
+		}
 	}
 	if(this.cases [i][j-1] == 2) {
-		return true ;
+		if(this.coupEstPossible(i,j-1,2,0,-1)){
+			return true;
+		}
 	}
 	if(this.cases [i+1][j-1] == 2) {
-		return true ;
+		if(this.coupEstPossible(i+1,j-1,2,1,-1)){
+			return true;
+		}
 	}
 	if(this.cases [i-1][j+1] == 2) {
-		return true ;
+		if(this.coupEstPossible(i-1,j+1,2,-1,+1)){
+			return true;
+		}
 	}
 	return false;
 }
