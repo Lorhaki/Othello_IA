@@ -4,14 +4,15 @@ import java.util.ArrayList;
 
 public class Plateau {
 	//Tableau d'entier pour représenter les cases d'un tableau
-	private int [][] cases;
+	private int [][] tab;
 	//i et j pour coordonnées d'une case
 	private int i , j ;
 	private int nbrBlanc , nbrNoir , nbrVide ;
 	//Liste des coups possibles pour les pions noir et blanc
-	private ArrayList<CoupPossible> listeBlanc;
-	private ArrayList<CoupPossible> listeNoir;
+	private ArrayList<Case> listeBlanc;
+	private ArrayList<Case> listeNoir;
 	//cases 1 pour blanc et 2 pour noir
+	Joueur joueur1, joueur2;
 
 
 	//Constructeur pour initailaiser un plateau classique d'Othello
@@ -19,23 +20,24 @@ public class Plateau {
 	public Plateau(){
 		this.i = 8;
 		this.j = 8;
-		this.cases = new int [8][8];
+		this.tab = new int [8][8];
 		for(int i = 0 ; i < this.i; i++) {
 			for(int j = 0 ; j< this.j ; j++) {
-				this.cases[i][j] = 0 ;
+				this.tab[i][j] = 0 ;
 			}
 		}
 	//pour mettre les pions qui sont posés de base sur le palteau.
-	cases[3][3] = 1 ; 
-	cases[4][4] = 1 ; 
-	cases[4][3] = 2 ; 
-	cases[3][4] = 2 ; 
+	tab[3][3] = 1 ;
+	tab[4][4] = 1 ;
+	tab[4][3] = 2 ;
+	tab[3][4] = 2 ;
 	this.NbrBlanc();
 	this.NbrNoir();
 	this.NbrVide();
 	this.listeBlanc = new ArrayList<>();
 	this.listeNoir = new ArrayList<>();
-	
+	joueur1 = new Joueur(1);
+	joueur2 = new Joueur(2);
 	}
 	
 
@@ -51,7 +53,7 @@ public class Plateau {
 			System.out.print(i+1);
 			for(int j = 0 ; j< this.j ; j++) {
 				System.out.print(" ");
-				System.out.print(cases[i][j]);
+				System.out.print(tab[i][j]);
 			}
 			System.out.println();
 		}
@@ -62,7 +64,7 @@ public class Plateau {
 		int nbrBlanc = 0 ;
 		for(int i = 0 ; i < this.i; i++) {
 			for(int j = 0 ; j< this.j ; j++) {
-				if(this.cases[i][j] == 1)
+				if(this.tab[i][j] == 1)
 					nbrBlanc++;
 			}		
 		}
@@ -74,7 +76,7 @@ public class Plateau {
 		int nbrNoir = 0 ;
 		for(int i = 0 ; i < this.i; i++) {
 			for(int j = 0 ; j< this.j ; j++) {
-				if(this.cases[i][j] == 2)
+				if(this.tab[i][j] == 2)
 					nbrNoir++;
 			}		
 		}
@@ -86,7 +88,7 @@ public class Plateau {
 		int nbrVide = 0 ;
 		for(int i = 0 ; i < this.i; i++) {
 			for(int j = 0 ; j< this.j ; j++) {
-				if(this.cases[i][j] == 0)
+				if(this.tab[i][j] == 0)
 					nbrVide++;
 			}		
 		}
@@ -119,17 +121,17 @@ public class Plateau {
 		if((x + dirx < 0) && (x+dirx>=i) && (y + diry < 0) && (y+diry>=j)){
 			return false;
 		}
-		if(cases[x + dirx][y + diry] == 0){
+		if(tab[x + dirx][y + diry] == 0){
 			return false;
 		}
-		if(cases[x + dirx][y + diry] == couleur){
+		if(tab[x + dirx][y + diry] == couleur){
 			return coupEstPossible(x + dirx,y+diry,couleur, dirx, diry);
 		}
 		return true;
 	}
 
 	public void mettreAjourLePlateau(int x, int y, int couleur) {
-		cases[x][y]=couleur;
+		tab[x][y]=couleur;
 	}
 
 	public void JouerUnCoup(int i , int j) {
@@ -138,42 +140,42 @@ public class Plateau {
 	
 	
 	public boolean regardeAutourNoir(int i , int j) {
-		if(this.cases [i+1][j+1] == 1) {
+		if(this.tab [i+1][j+1] == 1) {
 			if(this.coupEstPossible(i+1,j+1,1,1,1)){
 				return true;
 			}
 		}
-		if(this.cases [i+1][j] == 1) {
+		if(this.tab [i+1][j] == 1) {
 			if(this.coupEstPossible(i+1,j,1,1,0)){
 				return true;
 			}
 		}
-		if(this.cases [i][j+1] == 1) {
+		if(this.tab [i][j+1] == 1) {
 			if(this.coupEstPossible(i,j+1,1,0,1)){
 				return true;
 			}
 		}
-		if(this.cases [i-1][j-1] == 1) {
+		if(this.tab [i-1][j-1] == 1) {
 			if(this.coupEstPossible(i-1,j-1,1,-1,-1)){
 				return true;
 			}
 		}
-		if(this.cases [i-1][j] == 1) {
+		if(this.tab [i-1][j] == 1) {
 			if(this.coupEstPossible(i-1,j,1,-1,0)){
 				return true;
 			}
 		}
-		if(this.cases [i][j-1] == 1) {
+		if(this.tab [i][j-1] == 1) {
 			if(this.coupEstPossible(i,j-1,1,0,-1)){
 				return true;
 			}
 		}
-		if(this.cases [i+1][j-1] == 1) {
+		if(this.tab [i+1][j-1] == 1) {
 			if(this.coupEstPossible(i+1,j-1,1,1,-1)){
 				return true;
 			}
 		}
-		if(this.cases [i-1][j+1] == 1) {
+		if(this.tab [i-1][j+1] == 1) {
 			if(this.coupEstPossible(i-1,j+1,1,-1,+1)){
 				return true;
 			}
@@ -183,42 +185,42 @@ public class Plateau {
 	
 	public boolean regardeAutourBlanc(int i , int j) {
 
-	if(this.cases [i+1][j+1] == 2) {
+	if(this.tab [i+1][j+1] == 2) {
 		if(this.coupEstPossible(i+1,j+1,2,1,1)){
 			return true;
 		}
 	}
-	if(this.cases [i+1][j] == 2) {
+	if(this.tab [i+1][j] == 2) {
 		if(this.coupEstPossible(i+1,j,1,2,0)){
 			return true;
 		}
 	}
-	if(this.cases [i][j+1] == 2) {
+	if(this.tab [i][j+1] == 2) {
 		if(this.coupEstPossible(i,j+1,2,1,1)){
 			return true;
 		}
 	}
-	if(this.cases [i-1][j-1] == 2) {
+	if(this.tab [i-1][j-1] == 2) {
 		if(this.coupEstPossible(i-1,j-1,2,-1,-1)){
 			return true;
 		}
 	}
-	if(this.cases [i-1][j] == 2) {
+	if(this.tab [i-1][j] == 2) {
 		if(this.coupEstPossible(i-1,j,2,-1,0)){
 			return true;
 		}
 	}
-	if(this.cases [i][j-1] == 2) {
+	if(this.tab [i][j-1] == 2) {
 		if(this.coupEstPossible(i,j-1,2,0,-1)){
 			return true;
 		}
 	}
-	if(this.cases [i+1][j-1] == 2) {
+	if(this.tab [i+1][j-1] == 2) {
 		if(this.coupEstPossible(i+1,j-1,2,1,-1)){
 			return true;
 		}
 	}
-	if(this.cases [i-1][j+1] == 2) {
+	if(this.tab [i-1][j+1] == 2) {
 		if(this.coupEstPossible(i-1,j+1,2,-1,+1)){
 			return true;
 		}
@@ -229,11 +231,11 @@ public class Plateau {
 	
 	
 	public int[][] getCases() {
-		return cases;
+		return tab;
 	}
 
 	public void setCases(int[][] cases) {
-		this.cases = cases;
+		this.tab = cases;
 	}
 
 	public int getI() {
@@ -275,7 +277,7 @@ public class Plateau {
 	public void setNbrVide(int nbrVide) {
 		this.nbrVide = nbrVide;
 	}
-	public ArrayList<CoupPossible> getListeBlanc() {
+	public ArrayList<Case> getListeBlanc() {
 		return listeBlanc;
 	}
 
@@ -297,18 +299,33 @@ public class Plateau {
 		}
 	}
 
-	public void setListeBlanc(ArrayList<CoupPossible> listeBlanc) {
+	public void setListeBlanc(ArrayList<Case> listeBlanc) {
 		listeBlanc = listeBlanc;
 	}
 
 
-	public ArrayList<CoupPossible> getListeNoir() {
+	public ArrayList<Case> getListeNoir() {
 
 		return listeNoir;
 	}
 
 
-	public void setListeNoir(ArrayList<CoupPossible> listeNoir) {
+	public void setListeNoir(ArrayList<Case> listeNoir) {
 		listeNoir = listeNoir;
+	}
+
+	public ArrayList<Case> listeModif(int x, int y){
+		ArrayList<Case> liste = new ArrayList<>();
+		for (int a=0;a<i;a++){
+			for(int b=0;b<j;b++){
+				if(this.coupPossibleNoir(a,b));
+			}
+		}
+		return liste;
+	}
+
+	public void majPlateau(int x, int y)
+	{
+
 	}
 }

@@ -1,15 +1,15 @@
 package classe;
 
-public class CoupPossible {
+public class Case {
 	int x , y ;
 
 	
-	public CoupPossible() {
+	public Case() {
 		 this.x = 0 ;
 		 this.y = 0 ; 
 	}
 	
-	public CoupPossible(int x,int y) {
+	public Case(int x, int y) {
 		this.x = x; 
 		this.y = y; 
 	}
