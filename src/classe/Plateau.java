@@ -105,7 +105,7 @@ public class Plateau {
 	}
 	
 	public boolean coupPossibleNoir(int i , int j){
-		
+		boolean a= false;
 		return a ; 
 	}
 	public boolean coupPossibleBlanc(int i , int j){
@@ -136,6 +136,7 @@ public class Plateau {
 	
 	
 	public boolean regardeAutourNoir(int i , int j) {
+		ArrayList<Boolean> liste = new ArrayList<>();
 		if(this.cases [i+1][j+1] == 1) {
 			return true ;
 		}
