@@ -184,48 +184,47 @@ public class Plateau {
 	}
 	
 	public boolean regardeAutourBlanc(int i , int j) {
-
-	if(this.tab [i+1][j+1] == 2) {
-		if(this.coupEstPossible(i+1,j+1,2,1,1)){
-			return true;
-		}
-	}
-	if(this.tab [i+1][j] == 2) {
-		if(this.coupEstPossible(i+1,j,1,2,0)){
-			return true;
-		}
-	}
-	if(this.tab [i][j+1] == 2) {
-		if(this.coupEstPossible(i,j+1,2,1,1)){
-			return true;
-		}
-	}
-	if(this.tab [i-1][j-1] == 2) {
-		if(this.coupEstPossible(i-1,j-1,2,-1,-1)){
-			return true;
-		}
-	}
-	if(this.tab [i-1][j] == 2) {
-		if(this.coupEstPossible(i-1,j,2,-1,0)){
-			return true;
-		}
-	}
-	if(this.tab [i][j-1] == 2) {
-		if(this.coupEstPossible(i,j-1,2,0,-1)){
-			return true;
-		}
-	}
-	if(this.tab [i+1][j-1] == 2) {
-		if(this.coupEstPossible(i+1,j-1,2,1,-1)){
-			return true;
-		}
-	}
-	if(this.tab [i-1][j+1] == 2) {
-		if(this.coupEstPossible(i-1,j+1,2,-1,+1)){
-			return true;
-		}
-	}
-	return false;
+			if(this.tab [i+1][j+1] == 2) {
+				if(this.coupEstPossible(i+1,j+1,2,1,1)){
+					return true;
+				}
+			}
+			if(this.tab [i+1][j] == 2) {
+				if(this.coupEstPossible(i+1,j,1,2,0)){
+					return true;
+				}
+			}
+			if(this.tab [i][j+1] == 2) {
+				if(this.coupEstPossible(i,j+1,2,1,1)){
+					return true;
+				}
+			}
+			if(this.tab [i-1][j-1] == 2) {
+				if(this.coupEstPossible(i-1,j-1,2,-1,-1)){
+					return true;
+				}
+			}
+			if(this.tab [i-1][j] == 2) {
+				if(this.coupEstPossible(i-1,j,2,-1,0)){
+					return true;
+				}
+			}
+			if(this.tab [i][j-1] == 2) {
+				if(this.coupEstPossible(i,j-1,2,0,-1)){
+					return true;
+				}
+			}
+			if(this.tab [i+1][j-1] == 2) {
+				if(this.coupEstPossible(i+1,j-1,2,1,-1)){
+					return true;
+				}
+			}
+			if(this.tab [i-1][j+1] == 2) {
+				if(this.coupEstPossible(i-1,j+1,2,-1,+1)){
+					return true;
+				}
+			}
+			return false;
 }
 	//GET ET SET
 	
@@ -281,11 +280,14 @@ public class Plateau {
 		return listeBlanc;
 	}
 
+//permet de rechercher à chaque tour les coups possbible qui sont jouables
 	public void majCoupPossibleBlanc(){
 		listeBlanc.clear();
 		for (int a=0;a<i;a++){
 			for(int b=0;b<j;b++){
-				if(this.coupPossibleBlanc(a,b));
+				if(this.coupPossibleBlanc(a,b)){
+					listeBlanc.add(new Case(a,b));
+				}
 			}
 		}
 	}
@@ -294,13 +296,15 @@ public class Plateau {
 		listeNoir.clear();
 		for (int a=0;a<i;a++){
 			for(int b=0;b<j;b++){
-				if(this.coupPossibleNoir(a,b));
+				if(this.coupPossibleBlanc(a,b)){
+					listeNoir.add(new Case(a,b));
+				}
 			}
 		}
 	}
 
 	public void setListeBlanc(ArrayList<Case> listeBlanc) {
-		listeBlanc = listeBlanc;
+		this.listeBlanc = listeBlanc;
 	}
 
 
@@ -311,7 +315,7 @@ public class Plateau {
 
 
 	public void setListeNoir(ArrayList<Case> listeNoir) {
-		listeNoir = listeNoir;
+		this.listeNoir = listeNoir;
 	}
 
 	public ArrayList<Case> listeModif(int x, int y){
@@ -324,8 +328,110 @@ public class Plateau {
 		return liste;
 	}
 
+	//une fois qu'on sait qu'un coup doit changer des cases, on regarde jusqu'ou les cases vont changer
+	public Case limite(int x, int y, int a , int b, int couleur)
+	{
+		int tempx=x,tempy=y;
+		Case temp = new Case();
+		while(tab[tempx+a][tempy+b] == couleur)
+		{
+			tempx=tempx+a;
+			tempy=tempy+b;
+		}
+		temp.setX(tempx);
+		temp.setY(tempy);
+		return temp;
+	}
+
+	//permet de changer la couleur d'une ligne entre deux cases (a et b sont les directions)
+	public void changerCouleurLigne(int x, int y, int couleur, int a, int b)
+	{
+		int c;
+		Case lim=limite(x, y, a, b, couleur);
+		if(couleur == 1){
+			c=2;
+		} else c = 1;
+		if(x >= lim.getX()){
+			if( y >= lim.getY()){
+				for(int i= lim.getX();i<x;i++){
+					for(int j= lim.getY();j<y;j++){
+						tab[i][j]=c;
+					}
+				}
+			}
+			else{
+				for(int i= lim.getX();i<x;i++){
+					for(int j= lim.getY();j<y;j--){
+						tab[i][j]=c;
+					}
+				}
+			}
+		}
+		else{
+			if( y >= lim.getY()){
+				for(int i= lim.getX();i<x;i--){
+					for(int j= lim.getY();j<y;j++){
+						tab[i][j]=c;
+					}
+				}
+			}
+			else{
+				for(int i= lim.getX();i<x;i--){
+					for(int j= lim.getY();j<y;j--){
+						tab[i][j]=c;
+					}
+				}
+			}
+		}
+	}
+
+	//permet de changer les couleurs après qu'on joue en x, y
 	public void majPlateau(int x, int y)
 	{
-
+		int couleur;
+		if(tab[x][y]==1){
+			couleur = 2;
+		}
+		else couleur = 1;
+		if(this.tab [x+1][y+1] == couleur) {
+			if(this.coupEstPossible(x+1,j+1,couleur,1,1)){
+				changerCouleurLigne(x+1,j+1,couleur,1,1);
+			}
+		}
+		if(this.tab [x+1][y] == couleur) {
+			if(this.coupEstPossible(x+1,y,couleur,2,0)){
+				changerCouleurLigne(x+1,y,couleur,2,0);
+			}
+		}
+		if(this.tab [x][y+1] == couleur) {
+			if(this.coupEstPossible(x,y+1,couleur,1,1)){
+				changerCouleurLigne(x,y+1,couleur,1,1);
+			}
+		}
+		if(this.tab [x-1][y-1] == couleur) {
+			if(this.coupEstPossible(x-1,y-1,couleur,-1,-1)){
+				changerCouleurLigne(x-1,y-1,couleur,-1,-1);
+			}
+		}
+		if(this.tab [x-1][y] == couleur) {
+			if(this.coupEstPossible(x-1,y,couleur,-1,0)){
+				changerCouleurLigne(x-1,y,couleur,-1,0);
+			}
+		}
+		if(this.tab [x][y-1] == couleur) {
+			if(this.coupEstPossible(x,y-1,couleur,0,-1)){
+				changerCouleurLigne(x,y-1,couleur,0,-1);
+			}
+		}
+		if(this.tab [x+1][y-1] == couleur) {
+			if(this.coupEstPossible(x+1,y-1,couleur,1,-1)){
+				changerCouleurLigne(x+1,y-1,couleur,1,-1);
+			}
+		}
+		if(this.tab [x-1][y+1] == couleur) {
+			if(this.coupEstPossible(x-1,y+1,couleur,-1,+1)){
+				changerCouleurLigne(x-1,y+1,couleur,-1,+1);
+			}
+		}
 	}
 }
