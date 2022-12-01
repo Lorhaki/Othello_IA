@@ -108,13 +108,10 @@ public class Plateau {
 	}
 	
 	public boolean coupPossibleNoir(int i , int j){
-		boolean a= false;
-		return a ; 
+		return regardeAutourNoir(i,j);
 	}
 	public boolean coupPossibleBlanc(int i , int j){
-		boolean a = false;
-		
-		return a ; 
+		return regardeAutourBlanc(i,j);
 	}
 
 	public boolean coupEstPossible(int x, int y, int couleur, int dirx, int diry){
@@ -132,10 +129,6 @@ public class Plateau {
 
 	public void mettreAjourLePlateau(int x, int y, int couleur) {
 		tab[x][y]=couleur;
-	}
-
-	public void JouerUnCoup(int i , int j) {
-		
 	}
 	
 	
@@ -280,28 +273,7 @@ public class Plateau {
 		return listeBlanc;
 	}
 
-//permet de rechercher à chaque tour les coups possbible qui sont jouables
-	public void majCoupPossibleBlanc(){
-		listeBlanc.clear();
-		for (int a=0;a<i;a++){
-			for(int b=0;b<j;b++){
-				if(this.coupPossibleBlanc(a,b)){
-					listeBlanc.add(new Case(a,b));
-				}
-			}
-		}
-	}
 
-	public void majCoupPossibleNoir(){
-		listeNoir.clear();
-		for (int a=0;a<i;a++){
-			for(int b=0;b<j;b++){
-				if(this.coupPossibleBlanc(a,b)){
-					listeNoir.add(new Case(a,b));
-				}
-			}
-		}
-	}
 
 	public void setListeBlanc(ArrayList<Case> listeBlanc) {
 		this.listeBlanc = listeBlanc;
@@ -318,14 +290,22 @@ public class Plateau {
 		this.listeNoir = listeNoir;
 	}
 
-	public ArrayList<Case> listeModif(int x, int y){
-		ArrayList<Case> liste = new ArrayList<>();
+	//permet de rechercher à chaque tour les coups possibles pour les pions noirs et les pions noirs
+	public void majListesCoupsPossibles(){
+		listeBlanc.clear();
+		listeNoir.clear();
 		for (int a=0;a<i;a++){
 			for(int b=0;b<j;b++){
-				if(this.coupPossibleNoir(a,b));
+				if(tab[a][b]==0){
+					if(this.coupPossibleNoir(a,b)){
+						listeNoir.add(new Case(a,b));
+					}
+					if(this.coupPossibleBlanc(a,b)){
+						listeBlanc.add(new Case(a,b));
+					}
+				}
 			}
 		}
-		return liste;
 	}
 
 	//une fois qu'on sait qu'un coup doit changer des cases, on regarde jusqu'ou les cases vont changer
@@ -433,5 +413,20 @@ public class Plateau {
 				changerCouleurLigne(x-1,y+1,couleur,-1,+1);
 			}
 		}
+	}
+
+	//Pour faire un tour
+	public void joueur1Joue(int x, int y)
+	{
+		tab[x][y]=joueur1.getCouleur();
+		this.majPlateau(x, y);
+		this.majListesCoupsPossibles();
+	}
+
+	public void joueur2Joue(int x, int y)
+	{
+		tab[x][y]=joueur2.getCouleur();
+		this.majPlateau(x, y);
+		this.majListesCoupsPossibles();
 	}
 }
