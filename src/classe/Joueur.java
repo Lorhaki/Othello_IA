@@ -7,5 +7,11 @@ public class Joueur {
         this.couleur = couleur;
     }
 
+    public int getCouleur() {
+        return couleur;
+    }
 
+    public void setCouleur(int couleur) {
+        this.couleur = couleur;
+    }
 }
