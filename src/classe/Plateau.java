@@ -1,6 +1,7 @@
 package classe;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Plateau {
 	//Tableau d'entier pour représenter les cases d'un tableau
@@ -39,7 +40,7 @@ public class Plateau {
 	joueur1 = new Joueur(1);
 	joueur2 = new Joueur(2);
 	}
-	
+
 
 	//méthode pour afficher le plateau avec les coordonnées des cases sur les cotés de celui-ci
 	public void AfficherPlateau() {
@@ -416,17 +417,41 @@ public class Plateau {
 	}
 
 	//Pour faire un tour
-	public void joueur1Joue(int x, int y)
+	public void joueur1Joue()
 	{
-		tab[x][y]=joueur1.getCouleur();
-		this.majPlateau(x, y);
-		this.majListesCoupsPossibles();
+		Scanner scx = new Scanner(System.in);
+		Scanner scy = new Scanner(System.in);
+		System.out.println("Selectionner la ligne");
+		int x = scx.nextInt();
+		System.out.println("Selectionner la collone");
+		int y = scy.nextInt();
+		x--;
+		y--;
+		if ((x < 8  && x >= 0 )&& (y < 8  || y >= 0  )) {
+			tab[x][y]=joueur1.getCouleur();
+			this.majPlateau(x, y);
+			this.majListesCoupsPossibles();
+		}else {
+			System.out.println("Veuillez resaisir x et y");
+			this.joueur1Joue();
+		}
 	}
 
-	public void joueur2Joue(int x, int y)
+	public void joueur2Joue()
 	{
-		tab[x][y]=joueur2.getCouleur();
-		this.majPlateau(x, y);
-		this.majListesCoupsPossibles();
+		Scanner scx = new Scanner(System.in);
+		Scanner scy = new Scanner(System.in);
+		System.out.println("Selectionner la ligne");
+		int x = scx.nextInt();
+		System.out.println("Selectionner la collone");
+		int y = scy.nextInt();
+		if ((x < 8  && x >= 0 )&& (y < 8  || y >= 0  )) {
+			tab[x][y]= joueur2.getCouleur();
+			this.majPlateau(x, y);
+			this.majListesCoupsPossibles();
+		}else {
+			System.out.println("Veuillez resaisir x et y");
+			this.joueur2Joue();
+		}
 	}
 }

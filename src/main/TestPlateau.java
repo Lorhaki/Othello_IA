@@ -22,15 +22,7 @@ public class TestPlateau {
 				System.out.println("Voici le nombre de cases Blanche : "+ othello.getNbrBlanc());
 				System.out.println("Voici le nombre de cases Noires : "+ othello.getNbrNoir());
 				//au joueur 1 de joueur
-				//au depart on demande la saisie de la colonne et la ligne.
-				System.out.println("c'est au joueur 1 de jouer");
-				System.out.println("Veuillez saisir un chiffre pour choisir la ligne");
-				int x = scx.nextInt();
-
-				System.out.println("Veuillez saisir un chiffre pour chosir la colonne");
-				int y = scy.nextInt();
-				//Ici le coup est joué.
-
+				othello.joueur1Joue();
 			}
 			//on affiche
 			othello.AfficherPlateau();
@@ -39,13 +31,8 @@ public class TestPlateau {
 				System.out.println("Voici le nombre de cases Blanche : "+ othello.getNbrBlanc());
 				System.out.println("Voici le nombre de cases Noires : "+ othello.getNbrNoir());
 				//Au joueur 2 de jouer
-				System.out.println("c'est au joueur 2 de jouer");
-				System.out.println("Veuillez saisir un chiffre pour choisir la ligne");
-				int x2 = scx.nextInt();
-				System.out.println("Veuillez saisir un chiffre pour chosir la colonne");
-				int y2 = scy.nextInt();
 				//Ici le coup est joué.
-
+				othello.joueur2Joue();
 				}
 			}
 		}
