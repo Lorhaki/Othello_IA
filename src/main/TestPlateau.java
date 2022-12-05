@@ -16,17 +16,7 @@ public class TestPlateau {
 		Scanner scx = new Scanner(System.in);
 		Scanner scy = new Scanner(System.in);
 		othello.majListesCoupsPossibles();
-		for(int i=0;i<othello.getListeNoir().size();i++){
-			if(othello.getListeNoir().get(i) != null){
-				System.out.println("coups possible pour les noirs "+i+othello.getListeNoir().get(i));
-			}
-		}
-		for(int i=0;i<othello.getListeBlanc().size();i++){
-			if(othello.getListeBlanc().get(i) != null){
-				System.out.println("coups possible pour les blancs "+i+othello.getListeBlanc().get(i));
-			}
-		}
-		while(othello.getListeBlanc() != null || othello.getListeBlanc() != null) {
+		while((othello.getListeBlanc() != null && othello.getListeNoir() != null ) || othello.getNbrVide() == 0) {
 			othello.AfficherPlateau();
 			if(othello.getListeBlanc() != null) {
 				System.out.println("Voici le nombre de cases vide : "+ othello.getNbrVide());
@@ -37,7 +27,7 @@ public class TestPlateau {
 			}
 			//on affiche
 			othello.AfficherPlateau();
-			if(othello.getListeBlanc() != null) {
+			if(othello.getListeNoir() != null) {
 				System.out.println("Voici le nombre de cases vide : "+ othello.getNbrVide());
 				System.out.println("Voici le nombre de cases Blanche : "+ othello.getNbrBlanc());
 				System.out.println("Voici le nombre de cases Noires : "+ othello.getNbrNoir());
@@ -46,7 +36,11 @@ public class TestPlateau {
 				othello.joueur2Joue();
 				}
 			}
-		}
+
+		if (othello.getNbrNoir() > othello.getNbrBlanc()){
+			System.out.println("Couleur noir gagne");
+		}else System.out.println("Couleur blanc gagne");
+	 }
 	
 		
 		

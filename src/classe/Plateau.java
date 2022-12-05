@@ -478,6 +478,12 @@ public class Plateau {
 	//Pour faire un tour
 	public void joueur1Joue()
 	{
+		this.majListesCoupsPossibles();
+		for(int i=0;i<this.getListeBlanc().size();i++){
+			if(this.getListeBlanc().get(i) != null){
+				System.out.println("coups possible pour les blancs "+i+ " "+this.getListeBlanc().get(i));
+			}
+		}
 		Scanner scx = new Scanner(System.in);
 		Scanner scy = new Scanner(System.in);
 		System.out.println("Selectionner la ligne");
@@ -494,10 +500,19 @@ public class Plateau {
 			System.out.println("Veuillez resaisir x et y");
 			this.joueur1Joue();
 		}
+		this.NbrBlanc();
+		this.NbrNoir();
+		this.NbrVide();
 	}
 
 	public void joueur2Joue()
 	{
+		this.majListesCoupsPossibles();
+		for(int i=0;i<this.getListeNoir().size();i++){
+			if(this.getListeNoir().get(i) != null){
+				System.out.println("coups possible pour les noirs "+ i + " " +this.getListeNoir().get(i));
+			}
+		}
 		Scanner scx = new Scanner(System.in);
 		Scanner scy = new Scanner(System.in);
 		System.out.println("Selectionner la ligne");
@@ -514,5 +529,8 @@ public class Plateau {
 			System.out.println("Veuillez resaisir x et y");
 			this.joueur2Joue();
 		}
+		this.NbrBlanc();
+		this.NbrNoir();
+		this.NbrVide();
 	}
 }
