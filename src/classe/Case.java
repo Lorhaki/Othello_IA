@@ -31,4 +31,12 @@ public class Case {
 	public void setY(int y) {
 		this.y = y;
 	}
+
+	@Override
+	public String toString() {
+		return "Case{" +
+				"x=" + (x + 1) +
+				", y=" + (y + 1) +
+				'}';
+	}
 }

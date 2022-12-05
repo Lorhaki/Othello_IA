@@ -15,6 +15,17 @@ public class TestPlateau {
 		int b = 1 ;
 		Scanner scx = new Scanner(System.in);
 		Scanner scy = new Scanner(System.in);
+		othello.majListesCoupsPossibles();
+		for(int i=0;i<othello.getListeNoir().size();i++){
+			if(othello.getListeNoir().get(i) != null){
+				System.out.println("coups possible pour les noirs "+i+othello.getListeNoir().get(i));
+			}
+		}
+		for(int i=0;i<othello.getListeBlanc().size();i++){
+			if(othello.getListeBlanc().get(i) != null){
+				System.out.println("coups possible pour les blancs "+i+othello.getListeBlanc().get(i));
+			}
+		}
 		while(othello.getListeBlanc() != null || othello.getListeBlanc() != null) {
 			othello.AfficherPlateau();
 			if(othello.getListeBlanc() != null) {
