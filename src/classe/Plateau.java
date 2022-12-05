@@ -533,4 +533,11 @@ public class Plateau {
 		this.NbrNoir();
 		this.NbrVide();
 	}
+
+
+	public void iaJoue(Case coup, int couleur){
+		tab[coup.getX()][coup.getY()]= couleur;
+		this.majPlateau(coup.getX(), coup.getY());
+		this.majListesCoupsPossibles();
+	}
 }
