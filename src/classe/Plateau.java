@@ -39,6 +39,19 @@ public class Plateau {
 	this.listeNoir = new ArrayList<>();
 	joueur1 = new Joueur(1);
 	joueur2 = new Joueur(2);
+	this.instanciationCoups();
+
+	}
+
+	private void instanciationCoups(){
+		listeNoir.add(new Case(4,3));
+		listeNoir.add(new Case(3,4));
+		listeNoir.add(new Case(5,6));
+		listeNoir.add(new Case(6,5));
+		listeBlanc.add(new Case(4,6));
+		listeBlanc.add(new Case(6,4));
+		listeBlanc.add(new Case(3,5));
+		listeBlanc.add(new Case(5,3));
 	}
 
 
@@ -116,7 +129,7 @@ public class Plateau {
 	}
 
 	public boolean coupEstPossible(int x, int y, int couleur, int dirx, int diry){
-		if((x + dirx < 0) && (x+dirx>=i) && (y + diry < 0) && (y+diry>=j)){
+		if((x + dirx < 0) || (x+dirx>=i) || (y + diry < 0) || (y+diry>=j)){
 			return false;
 		}
 		if(tab[x + dirx][y + diry] == 0){
@@ -134,90 +147,126 @@ public class Plateau {
 	
 	
 	public boolean regardeAutourNoir(int i , int j) {
-		if(this.tab [i+1][j+1] == 1) {
-			if(this.coupEstPossible(i+1,j+1,1,1,1)){
-				return true;
+		if(i != 0){
+			if(j!=0){
+				if(i!=0 && j!=0){
+					if(this.tab [i-1][j-1] == 1) {
+						if(this.coupEstPossible(i-1,j-1,1,-1,-1)){
+							return true;
+						}
+					}
+				}
+			}
+			if(j!=7){
+				if(this.tab [i-1][j+1] == 1) {
+					if(this.coupEstPossible(i-1,j+1,1,-1,+1)){
+						return true;
+					}
+				}
+			}
+			if(this.tab [i-1][j] == 1) {
+				if(this.coupEstPossible(i-1,j,1,-1,0)){
+					return true;
+				}
 			}
 		}
-		if(this.tab [i+1][j] == 1) {
-			if(this.coupEstPossible(i+1,j,1,1,0)){
-				return true;
+		if(i != 7){
+			if(j!=0){
+				if(this.tab [i+1][j-1] == 1) {
+					if(this.coupEstPossible(i+1,j-1,1,1,-1)){
+						return true;
+					}
+				}
+			}
+			else if(j!=7){
+				if(this.tab [i+1][j+1] == 1) {
+					if(this.coupEstPossible(i+1,j+1,1,1,1)){
+						return true;
+					}
+				}
+			}
+			if(this.tab [i+1][j] == 1) {
+				if(this.coupEstPossible(i+1,j,1,1,0)){
+					return true;
+				}
 			}
 		}
-		if(this.tab [i][j+1] == 1) {
-			if(this.coupEstPossible(i,j+1,1,0,1)){
-				return true;
+		if(j != 0 ){
+			if(this.tab [i][j-1] == 1) {
+				if(this.coupEstPossible(i,j-1,1,0,-1)){
+					return true;
+				}
 			}
 		}
-		if(this.tab [i-1][j-1] == 1) {
-			if(this.coupEstPossible(i-1,j-1,1,-1,-1)){
-				return true;
-			}
-		}
-		if(this.tab [i-1][j] == 1) {
-			if(this.coupEstPossible(i-1,j,1,-1,0)){
-				return true;
-			}
-		}
-		if(this.tab [i][j-1] == 1) {
-			if(this.coupEstPossible(i,j-1,1,0,-1)){
-				return true;
-			}
-		}
-		if(this.tab [i+1][j-1] == 1) {
-			if(this.coupEstPossible(i+1,j-1,1,1,-1)){
-				return true;
-			}
-		}
-		if(this.tab [i-1][j+1] == 1) {
-			if(this.coupEstPossible(i-1,j+1,1,-1,+1)){
-				return true;
+		if(j != 7){
+			if(this.tab [i][j+1] == 1) {
+				if(this.coupEstPossible(i,j+1,1,0,1)){
+					return true;
+				}
 			}
 		}
 		return false;
 	}
 	
 	public boolean regardeAutourBlanc(int i , int j) {
-			if(this.tab [i+1][j+1] == 2) {
-				if(this.coupEstPossible(i+1,j+1,2,1,1)){
-					return true;
+		if(i != 0){
+			if(j!=0){
+				if(i!=0 && j!=0){
+					if(this.tab [i-1][j-1] == 2) {
+						if(this.coupEstPossible(i-1,j-1,1,-1,-1)){
+							return true;
+						}
+					}
 				}
 			}
-			if(this.tab [i+1][j] == 2) {
-				if(this.coupEstPossible(i+1,j,1,2,0)){
-					return true;
-				}
-			}
-			if(this.tab [i][j+1] == 2) {
-				if(this.coupEstPossible(i,j+1,2,1,1)){
-					return true;
-				}
-			}
-			if(this.tab [i-1][j-1] == 2) {
-				if(this.coupEstPossible(i-1,j-1,2,-1,-1)){
-					return true;
+			if(j!=7){
+				if(this.tab [i-1][j+1] == 2) {
+					if(this.coupEstPossible(i-1,j+1,1,-1,+1)){
+						return true;
+					}
 				}
 			}
 			if(this.tab [i-1][j] == 2) {
-				if(this.coupEstPossible(i-1,j,2,-1,0)){
+				if(this.coupEstPossible(i-1,j,1,-1,0)){
 					return true;
 				}
 			}
+		}
+		if(i != 7){
+			if(j!=0){
+				if(this.tab [i+1][j-1] == 2) {
+					if(this.coupEstPossible(i+1,j-1,1,1,-1)){
+						return true;
+					}
+				}
+			}
+			else if(j!=7){
+				if(this.tab [i+1][j+1] == 2) {
+					if(this.coupEstPossible(i+1,j+1,1,1,1)){
+						return true;
+					}
+				}
+			}
+			if(this.tab [i+1][j] == 2) {
+				if(this.coupEstPossible(i+1,j,1,1,0)){
+					return true;
+				}
+			}
+		}
+		if(j != 0 ){
 			if(this.tab [i][j-1] == 2) {
-				if(this.coupEstPossible(i,j-1,2,0,-1)){
+				if(this.coupEstPossible(i,j-1,1,0,-1)){
 					return true;
 				}
 			}
-			if(this.tab [i+1][j-1] == 2) {
-				if(this.coupEstPossible(i+1,j-1,2,1,-1)){
+		}
+		if(j != 7){
+			if(this.tab [i][j+1] == 2) {
+				if(this.coupEstPossible(i,j+1,1,0,1)){
 					return true;
 				}
 			}
-			if(this.tab [i-1][j+1] == 2) {
-				if(this.coupEstPossible(i-1,j+1,2,-1,+1)){
-					return true;
-				}
-			}
+		}
 			return false;
 }
 	//GET ET SET
@@ -328,41 +377,12 @@ public class Plateau {
 	public void changerCouleurLigne(int x, int y, int couleur, int a, int b)
 	{
 		int c;
-		Case lim=limite(x, y, a, b, couleur);
 		if(couleur == 1){
 			c=2;
 		} else c = 1;
-		if(x >= lim.getX()){
-			if( y >= lim.getY()){
-				for(int i= lim.getX();i<x;i++){
-					for(int j= lim.getY();j<y;j++){
-						tab[i][j]=c;
-					}
-				}
-			}
-			else{
-				for(int i= lim.getX();i<x;i++){
-					for(int j= lim.getY();j<y;j--){
-						tab[i][j]=c;
-					}
-				}
-			}
-		}
-		else{
-			if( y >= lim.getY()){
-				for(int i= lim.getX();i<x;i--){
-					for(int j= lim.getY();j<y;j++){
-						tab[i][j]=c;
-					}
-				}
-			}
-			else{
-				for(int i= lim.getX();i<x;i--){
-					for(int j= lim.getY();j<y;j--){
-						tab[i][j]=c;
-					}
-				}
-			}
+		if(tab[i][j]==couleur){
+			tab[i][j]=c;
+			changerCouleurLigne(x+a,y+b,couleur,a,b);
 		}
 	}
 
@@ -374,46 +394,83 @@ public class Plateau {
 			couleur = 2;
 		}
 		else couleur = 1;
-		if(this.tab [x+1][y+1] == couleur) {
-			if(this.coupEstPossible(x+1,j+1,couleur,1,1)){
-				changerCouleurLigne(x+1,j+1,couleur,1,1);
+		if(x!=7){
+			if(y!=7){
+				if(this.tab [x+1][y+1] == couleur) {
+					if(this.coupEstPossible(x+1,j+1,couleur,1,1)){
+						changerCouleurLigne(x+1,j+1,couleur,1,1);
+					}
+				}
+			}
+			if(y!=0){
+				if(this.tab [x+1][y-1] == couleur) {
+					if(this.coupEstPossible(x+1,y-1,couleur,1,-1)){
+						changerCouleurLigne(x+1,y-1,couleur,1,-1);
+					}
+				}
+			}
+			if(this.tab [x+1][y] == couleur) {
+				if(this.coupEstPossible(x+1,y,couleur,2,0)){
+					changerCouleurLigne(x+1,y,couleur,2,0);
+				}
 			}
 		}
-		if(this.tab [x+1][y] == couleur) {
-			if(this.coupEstPossible(x+1,y,couleur,2,0)){
-				changerCouleurLigne(x+1,y,couleur,2,0);
+		if(x!=0){
+			if(y!=7){
+				if(this.tab [x-1][y+1] == couleur) {
+					if(this.coupEstPossible(x-1,y+1,couleur,-1,+1)){
+						changerCouleurLigne(x-1,y+1,couleur,-1,+1);
+					}
+				}
+			}
+			if(y!=0){
+				if(this.tab [x-1][y-1] == couleur) {
+					if(this.coupEstPossible(x-1,y-1,couleur,-1,-1)){
+						changerCouleurLigne(x-1,y-1,couleur,-1,-1);
+					}
+				}
+			}
+			if(this.tab [x-1][y] == couleur) {
+				if(this.coupEstPossible(x-1,y,couleur,-1,0)){
+					changerCouleurLigne(x-1,y,couleur,-1,0);
+				}
 			}
 		}
-		if(this.tab [x][y+1] == couleur) {
-			if(this.coupEstPossible(x,y+1,couleur,1,1)){
-				changerCouleurLigne(x,y+1,couleur,1,1);
+		if(y!=0){
+			if(this.tab [x][y-1] == couleur) {
+				if(this.coupEstPossible(x,y-1,couleur,0,-1)){
+					changerCouleurLigne(x,y-1,couleur,0,-1);
+				}
 			}
 		}
-		if(this.tab [x-1][y-1] == couleur) {
-			if(this.coupEstPossible(x-1,y-1,couleur,-1,-1)){
-				changerCouleurLigne(x-1,y-1,couleur,-1,-1);
+		if(y!=7){
+			if(this.tab [x][y+1] == couleur) {
+				if(this.coupEstPossible(x,y+1,couleur,1,1)){
+					changerCouleurLigne(x,y+1,couleur,1,1);
+				}
 			}
 		}
-		if(this.tab [x-1][y] == couleur) {
-			if(this.coupEstPossible(x-1,y,couleur,-1,0)){
-				changerCouleurLigne(x-1,y,couleur,-1,0);
+	}
+
+	public boolean appartientCoupBlanc(int x, int y){
+		Case temp = new Case(x,y);
+		for(int i=0;i<listeBlanc.size();i++)
+		{
+			if(listeBlanc.get(i).getX()==x && listeBlanc.get(i).getY()==y){
+				return true;
 			}
 		}
-		if(this.tab [x][y-1] == couleur) {
-			if(this.coupEstPossible(x,y-1,couleur,0,-1)){
-				changerCouleurLigne(x,y-1,couleur,0,-1);
+		return false;
+	}
+	public boolean appartientCoupNoir(int x, int y){
+		Case temp = new Case(x,y);
+		for(int i=0;i<listeNoir.size();i++)
+		{
+			if(listeNoir.get(i).getX()==x && listeNoir.get(i).getY()==y){
+				return true;
 			}
 		}
-		if(this.tab [x+1][y-1] == couleur) {
-			if(this.coupEstPossible(x+1,y-1,couleur,1,-1)){
-				changerCouleurLigne(x+1,y-1,couleur,1,-1);
-			}
-		}
-		if(this.tab [x-1][y+1] == couleur) {
-			if(this.coupEstPossible(x-1,y+1,couleur,-1,+1)){
-				changerCouleurLigne(x-1,y+1,couleur,-1,+1);
-			}
-		}
+		return false;
 	}
 
 	//Pour faire un tour
@@ -427,7 +484,7 @@ public class Plateau {
 		int y = scy.nextInt();
 		x--;
 		y--;
-		if ((x < 8  && x >= 0 )&& (y < 8  || y >= 0  )) {
+		if ((x < 8  && x >= 0 )&& (y < 8  && y >= 0  ) && appartientCoupBlanc(x,y)) {
 			tab[x][y]=joueur1.getCouleur();
 			this.majPlateau(x, y);
 			this.majListesCoupsPossibles();
@@ -445,7 +502,9 @@ public class Plateau {
 		int x = scx.nextInt();
 		System.out.println("Selectionner la collone");
 		int y = scy.nextInt();
-		if ((x < 8  && x >= 0 )&& (y < 8  || y >= 0  )) {
+		x--;
+		y--;
+		if ((x < 8  && x >= 0 )&& (y < 8  && y >= 0  ) && appartientCoupNoir(x,y)) {
 			tab[x][y]= joueur2.getCouleur();
 			this.majPlateau(x, y);
 			this.majListesCoupsPossibles();
