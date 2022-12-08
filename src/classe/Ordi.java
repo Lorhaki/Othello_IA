@@ -49,7 +49,7 @@ public class Ordi extends Joueur{
             for(int j = 0; j<listeCoupPossible.size();j++){
                 temp= plateau;
                 temp.iaJoue(listeCoupPossible.get(j),couleur);
-                temp.iaJoue(listeCoupPossible.get(j),couleurI);
+                temp.iaJoue(meilleurCoup(temp,couleurI,nbIteration),couleurI);
                 temp.iaJoue(this.meilleurCoup(temp,couleur,nbIteration-1),couleur);
                 if(couleur == 1){
                     if((temp.getNbrBlanc()-temp.getNbrNoir()) >= point){
