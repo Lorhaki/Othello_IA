@@ -5,13 +5,13 @@ import java.util.Scanner;
 
 public class Plateau {
 	//Tableau d'entier pour représenter les cases d'un tableau
-	private int [][] tab;
+	protected int [][] tab;
 	//i et j pour coordonnées d'une case
-	private int i , j ;
-	private int nbrBlanc , nbrNoir , nbrVide ;
+	protected int i , j ;
+	protected int nbrBlanc , nbrNoir , nbrVide ;
 	//Liste des coups possibles pour les pions noir et blanc
-	private ArrayList<Case> listeBlanc;
-	private ArrayList<Case> listeNoir;
+	protected ArrayList<Case> listeBlanc;
+	protected ArrayList<Case> listeNoir;
 	//cases 1 pour blanc et 2 pour noir
 	Joueur joueur1, joueur2;
 
@@ -381,7 +381,7 @@ public class Plateau {
 		if(couleur == 1){
 			c=2;
 		} else c = 1;
-		System.out.println("verifie si on change en {" + x + "," + y + "}");
+		//System.out.println("verifie si on change en {" + x + "," + y + "}");
 		if(tab[x][y]==couleur){
 			tab[x][y]=c;
 			changerCouleurLigne(x+a,y+b,couleur,a,b);
@@ -452,6 +452,9 @@ public class Plateau {
 				}
 			}
 		}
+		this.NbrBlanc();
+		this.NbrNoir();
+		this.NbrVide();
 	}
 
 	public boolean appartientCoupBlanc(int x, int y){
@@ -529,15 +532,44 @@ public class Plateau {
 			System.out.println("Veuillez resaisir x et y");
 			this.joueur2Joue();
 		}
-		this.NbrBlanc();
-		this.NbrNoir();
-		this.NbrVide();
 	}
 
+	//permet de jouer des coups avec la couleur demander pour faire des essais avec l'ia
+	public void couleurJoue(Case coup, int couleur)
+	{
+		int x = coup.getX();
+		int y = coup.getY();
+		if ((x < 8  && x >= 0 )&& (y < 8  && y >= 0  )) {
+			tab[x][y]= couleur;
+			this.majPlateau(x, y);
+			this.majListesCoupsPossibles();
+		}else {
+			System.out.println("probleme ia");
+		}
+	}
 
-	public void iaJoue(Case coup, int couleur){
-		tab[coup.getX()][coup.getY()]= couleur;
-		this.majPlateau(coup.getX(), coup.getY());
-		this.majListesCoupsPossibles();
+	Plateau getPlateau(){
+		Plateau p= new Plateau();
+		for(int x = 0; x<i; x++)
+		{
+			for(int y=0; y<j; y++)
+			{
+				p.tab[x][y] = tab[x][y];
+			}
+		}
+		p.setNbrBlanc(nbrBlanc);
+		p.setNbrNoir(nbrNoir);
+		p.setNbrVide(nbrVide);
+		p.listeBlanc.clear();
+		p.listeNoir.clear();
+		for(int v=0; v<listeBlanc.size(); v++)
+		{
+			p.listeBlanc.add(listeBlanc.get(v));
+		}
+		for(int v=0; v<listeNoir.size(); v++)
+		{
+			p.listeNoir.add(listeNoir.get(v));
+		}
+		return p;
 	}
 }

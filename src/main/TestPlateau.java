@@ -1,6 +1,8 @@
 package main;
 
+import classe.Ordi;
 import classe.Plateau;
+import classe.PlateauIA;
 
 import java.util.Scanner;
 
@@ -8,8 +10,9 @@ public class TestPlateau {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		//On initialise ici notre plateau de jeu 
-		Plateau othello = new Plateau();
+		//On initialise ici notre plateau de jeu
+		Ordi ia = new Ordi(1);
+		PlateauIA othello = new PlateauIA(ia.getCouleur());
 		//On commence la partie
 		int a = 1 ;
 		int b = 1 ;
@@ -24,7 +27,8 @@ public class TestPlateau {
 				System.out.println("Voici le nombre de cases Blanche : "+ othello.getNbrBlanc());
 				System.out.println("Voici le nombre de cases Noires : "+ othello.getNbrNoir());
 				//au joueur 1 de joueur
-				othello.joueur1Joue();
+				//othello.joueur1Joue();
+				othello.couleurJoue(othello.meilleurCoup(othello, ia.getCouleur(), 3),ia.getCouleur() );
 			}
 			//on affiche
 			othello.AfficherPlateau();
@@ -35,6 +39,7 @@ public class TestPlateau {
 				//Au joueur 2 de jouer
 				//Ici le coup est joué.
 				othello.joueur2Joue();
+				//othello.iaJoue(ia.meilleurCoup(othello, ia.getCouleur(), 3),ia.getCouleur() );
 				}
 			othello.majListesCoupsPossibles();
 			}
