@@ -1,7 +1,6 @@
 package main;
 
 import classe.Ordi;
-import classe.Plateau;
 import classe.PlateauIA;
 
 import java.util.Scanner;
@@ -13,6 +12,7 @@ public class TestPlateau {
 		//On initialise ici notre plateau de jeu
 		Ordi ia = new Ordi(1);
 		PlateauIA othello = new PlateauIA(ia.getCouleur());
+		othello.affichTactiques();
 		//On commence la partie
 		int a = 1 ;
 		int b = 1 ;
@@ -28,7 +28,7 @@ public class TestPlateau {
 				System.out.println("Voici le nombre de cases Noires : "+ othello.getNbrNoir());
 				//au joueur 1 de joueur
 				//othello.joueur1Joue();
-				othello.couleurJoue(othello.meilleurCoup(othello, ia.getCouleur(), 3),ia.getCouleur() );
+				othello.couleurJoue(othello.absolu(othello, ia.getCouleur(), 3),ia.getCouleur());
 			}
 			//on affiche
 			othello.AfficherPlateau();

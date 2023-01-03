@@ -14,6 +14,15 @@ public class Case {
 		this.y = y; 
 	}
 
+	public boolean egal(Case c)
+	{
+		if(x == c.getX() && y == c.getY())
+		{
+			return true;
+		}
+		return false;
+	}
+
 	
 	//get et set 
 	public int getX() {

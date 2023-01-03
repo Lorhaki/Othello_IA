@@ -15,6 +15,10 @@ public class Plateau {
 	//cases 1 pour blanc et 2 pour noir
 	Joueur joueur1, joueur2;
 
+	protected int [][] tactiques;
+	protected int valBlanc;
+	protected int valNoir;
+
 
 	//Constructeur pour initailaiser un plateau classique d'Othello
 	//On considére que le 1 c'est pour les blancs et 2 pour les noirs
@@ -39,8 +43,102 @@ public class Plateau {
 	this.listeNoir = new ArrayList<>();
 	joueur1 = new Joueur(1);
 	joueur2 = new Joueur(2);
-	//this.instanciationCoups();
+	//this.instanciationCoups()
+		creaTactiques();
+	}
 
+	public int getValBlanc() {
+		return valBlanc;
+	}
+
+	public int getValNoir() {
+		return valNoir;
+	}
+
+	//instanciation tableau des valeurs tactiques de l'othello
+	public void creaTactiques()
+	{
+		tactiques = new int[8][8];
+		tactiques[0][0] = 500;
+		tactiques[0][7] = 500;
+		tactiques[7][0] = 500;
+		tactiques[7][7] = 500;
+
+		tactiques[0][1] = -150;
+		tactiques[0][6] = -150;
+		tactiques[1][0] = -150;
+		tactiques[1][7] = -150;
+		tactiques[6][0] = -150;
+		tactiques[6][7] = -150;
+		tactiques[7][1] = -150;
+		tactiques[7][6] = -150;
+
+		tactiques[1][1] = -250;
+		tactiques[1][6] = -250;
+		tactiques[6][1] = -250;
+		tactiques[6][6] = -250;
+
+		tactiques[0][2] = 30;
+		tactiques[0][5] = 30;
+		tactiques[2][0] = 30;
+		tactiques[2][7] = 30;
+		tactiques[5][0] = 30;
+		tactiques[5][7] = 30;
+		tactiques[7][2] = 30;
+		tactiques[7][5] = 30;
+
+		tactiques[0][3] = 10;
+		tactiques[0][4] = 10;
+		tactiques[3][0] = 10;
+		tactiques[4][0] = 10;
+		tactiques[3][7] = 10;
+		tactiques[4][7] = 10;
+		tactiques[7][3] = 10;
+		tactiques[7][4] = 10;
+
+		tactiques[3][3] = 16;
+		tactiques[4][3] = 16;
+		tactiques[3][4] = 16;
+		tactiques[4][4] = 16;
+
+		tactiques[2][3] = 2;
+		tactiques[2][4] = 2;
+		tactiques[5][3] = 2;
+		tactiques[5][4] = 2;
+		tactiques[3][2] = 2;
+		tactiques[4][2] = 2;
+		tactiques[3][5] = 2;
+		tactiques[4][5] = 2;
+
+		tactiques[2][2] = 1;
+		tactiques[2][5] = 1;
+		tactiques[5][2] = 1;
+		tactiques[5][5] = 1;
+
+		for(int i=2; i<6; i++)
+		{
+			tactiques[1][i] = 0;
+			tactiques[i][1] = 0;
+			tactiques[6][i] = 0;
+			tactiques[i][6] = 0;
+		}
+	}
+
+
+
+	//permet de mettre a jour la valeur des points pour les blancs et les noirs avec les valeurs tactiques du tableau
+	public void majValTactiques()
+	{
+		valBlanc = 0;
+		valNoir = 0;
+		for(int i = 0 ; i < this.i; i++) {
+			for(int j = 0 ; j< this.j ; j++) {
+				if(this.tab[i][j] == 1)
+					valBlanc += tactiques[i][j];
+				else if(tab[i][j] == 2)
+					valNoir += tactiques[i][j];
+			}
+		}
 	}
 
 	private void instanciationCoups(){
@@ -139,10 +237,6 @@ public class Plateau {
 			return coupEstPossible(x + dirx,y+diry,couleur, dirx, diry);
 		}
 		return true;
-	}
-
-	public void mettreAjourLePlateau(int x, int y, int couleur) {
-		tab[x][y]=couleur;
 	}
 	
 	
@@ -455,6 +549,7 @@ public class Plateau {
 		this.NbrBlanc();
 		this.NbrNoir();
 		this.NbrVide();
+		majValTactiques();
 	}
 
 	public boolean appartientCoupBlanc(int x, int y){
