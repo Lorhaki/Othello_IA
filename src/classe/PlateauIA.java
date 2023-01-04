@@ -3,12 +3,12 @@ package classe;
 import java.util.ArrayList;
 
 public class PlateauIA extends Plateau{
-    Ordi ia;
+    Joueur ia;
 
 
     public PlateauIA(int couleurIa) {
         super();
-        ia = new Ordi(couleurIa);
+        ia = new Joueur(couleurIa);
     }
 
 

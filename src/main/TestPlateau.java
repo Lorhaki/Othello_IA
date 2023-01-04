@@ -1,6 +1,6 @@
 package main;
 
-import classe.Ordi;
+import classe.Joueur;
 import classe.PlateauIA;
 
 import java.util.Scanner;
@@ -10,7 +10,7 @@ public class TestPlateau {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		//On initialise ici notre plateau de jeu
-		Ordi ia = new Ordi(1);
+		Joueur ia = new Joueur(1);
 		PlateauIA othello = new PlateauIA(ia.getCouleur());
 		othello.affichTactiques();
 		//On commence la partie
