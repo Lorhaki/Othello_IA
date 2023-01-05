@@ -333,7 +333,7 @@ public class PlateauIA extends Plateau{
         {
             return positionel(this.getPlateau(), couleur, nbIteration);
         }
-        if(nbrVide > 10)
+        if(nbrVide <= 10)
         {
             return absolu(this.getPlateau(), couleur, nbIteration);
         }

@@ -16,7 +16,7 @@ public class TestPlateau {
 		//On commence la partie
 		int a = 1 ;
 		int b = 1 ;
-		int nbiteration = 3;
+		int nbiteration = 6;
 		int couleur;
 		double start;
 		double end;
@@ -39,7 +39,7 @@ public class TestPlateau {
 				//au joueur 1 de joueur
 				//othello.joueur1Joue();
 				start = System.nanoTime();
-				othello.iaMobilite(couleur,nbiteration);
+				othello.iaPositionnel(couleur,nbiteration);
 				end = System.nanoTime();
 				dureeBlanc += (end-start);
 			}
@@ -56,7 +56,7 @@ public class TestPlateau {
 				//othello.joueur2Joue();
 				//othello.iaJoue(ia.meilleurCoup(othello, ia.getCouleur(), 3),ia.getCouleur() );
 				start = System.nanoTime();
-				othello.aleatoire(couleur);
+				othello.iaPositionnel(couleur,nbiteration);
 				end = System.nanoTime();
 				dureeNoir += (end -start);
 				}
