@@ -4,7 +4,7 @@ import classe.Joueur;
 import classe.PlateauIA;
 
 import java.util.Scanner;
-
+import java.util.concurrent.TimeUnit;
 public class TestPlateau {
 
 	public static void main(String[] args) {
@@ -16,40 +16,65 @@ public class TestPlateau {
 		//On commence la partie
 		int a = 1 ;
 		int b = 1 ;
+		int nbiteration = 3;
+		int couleur;
+		double start;
+		double end;
+		double dureeBlanc=0;
+		double dureeNoir=0;
+		int compteBlanc = 0;
+		int compteNoir = 0;
 		Scanner scx = new Scanner(System.in);
 		Scanner scy = new Scanner(System.in);
 		othello.majListesCoupsPossibles();
-		while((othello.getListeBlanc().isEmpty() != true) && (othello.getListeNoir().isEmpty() != true) || othello.getNbrVide() == 0) {
+		while(((othello.getListeBlanc().isEmpty() != true) || (othello.getListeNoir().isEmpty() != true)) && othello.getNbrVide() != 0) {
 			othello.AfficherPlateau();
 
 			if(othello.getListeBlanc().isEmpty() != true) {
+				compteBlanc++;
+				couleur = 1;
 				System.out.println("Voici le nombre de cases vide : "+ othello.getNbrVide());
 				System.out.println("Voici le nombre de cases Blanche : "+ othello.getNbrBlanc());
 				System.out.println("Voici le nombre de cases Noires : "+ othello.getNbrNoir());
 				//au joueur 1 de joueur
 				//othello.joueur1Joue();
-				othello.couleurJoue(othello.absolu(othello, ia.getCouleur(), 3),ia.getCouleur());
+				start = System.nanoTime();
+				othello.iaMobilite(couleur,nbiteration);
+				end = System.nanoTime();
+				dureeBlanc += (end-start);
 			}
 			//on affiche
 			othello.AfficherPlateau();
 			if(othello.getListeNoir().isEmpty() != true) {
+				compteNoir++;
+				couleur = 2;
 				System.out.println("Voici le nombre de cases vide : "+ othello.getNbrVide());
 				System.out.println("Voici le nombre de cases Blanche : "+ othello.getNbrBlanc());
 				System.out.println("Voici le nombre de cases Noires : "+ othello.getNbrNoir());
 				//Au joueur 2 de jouer
 				//Ici le coup est joué.
-				othello.joueur2Joue();
+				//othello.joueur2Joue();
 				//othello.iaJoue(ia.meilleurCoup(othello, ia.getCouleur(), 3),ia.getCouleur() );
+				start = System.nanoTime();
+				othello.aleatoire(couleur);
+				end = System.nanoTime();
+				dureeNoir += (end -start);
 				}
 			othello.majListesCoupsPossibles();
 			}
-
+		othello.AfficherPlateau();
 		if (othello.getNbrNoir() > othello.getNbrBlanc()){
 			System.out.println("Couleur noir gagne");
-		}else System.out.println("Couleur blanc gagne");
+		}else if(othello.getNbrNoir() < othello.getNbrBlanc())
+		{
+			System.out.println("Couleur blanc gagne");
+		} else System.out.println("égalité");
+
+		dureeBlanc = dureeBlanc/compteBlanc;
+		dureeNoir = dureeNoir/compteNoir;
+		System.out.println("pion noir = " + othello.getNbrNoir() + " pion blanc = " + othello.getNbrBlanc());
+		System.out.println("en millisecondes: duree noir = " + dureeNoir/1000000 + " duree blanc = " + dureeBlanc/1000000);
 	 }
-	
-		
 		
 	}
 

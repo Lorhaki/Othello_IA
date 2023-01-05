@@ -11,7 +11,7 @@ public class PlateauIA extends Plateau{
         ia = new Joueur(couleurIa);
     }
 
-    public void aléatoire(int couleur)
+    public void aleatoire(int couleur)
     {
         int rand;
         if(couleur == 1)
@@ -49,6 +49,7 @@ public class PlateauIA extends Plateau{
     }
 
     public Case absolu(Plateau plateau, int couleur, int nbIteration){
+        Case c;
         if(nbIteration > 1){
             int couleurI;
             ArrayList<Case> listeCoupPossible = plateau.getListeBlanc();
@@ -61,13 +62,21 @@ public class PlateauIA extends Plateau{
             }
             Plateau temp =new Plateau();
             int point = 0;
-            Case maxPoint = listeCoupPossible.get(0);
             if(!listeCoupPossible.isEmpty()){
+                Case maxPoint = listeCoupPossible.get(0);
                 for(int j = 0; j<listeCoupPossible.size();j++){
                     temp= plateau.getPlateau();
                     temp.couleurJoue(listeCoupPossible.get(j), couleur);
-                    temp.couleurJoue(absolu(temp,couleurI,nbIteration-1),couleurI);
-                    temp.couleurJoue(this.absolu(temp,couleur,nbIteration-1),couleur);
+                    c=absolu(temp,couleurI,nbIteration-1);
+                    if(c != null)
+                    {
+                        temp.couleurJoue(c,couleurI);
+                        c =this.absolu(temp,couleur,nbIteration-1);
+                        if(c !=null)
+                        {
+                            temp.couleurJoue(c,couleur);
+                        }
+                    }
                     if(couleur == 1){
                         if((temp.getNbrBlanc()-temp.getNbrNoir()) >= point){
                             point = temp.getNbrBlanc() - temp.getNbrNoir();
@@ -116,7 +125,7 @@ public class PlateauIA extends Plateau{
             }
             return maxPoint;
         }
-        System.out.println("liste vide");
+        //System.out.println("liste vide");
         return null;
     }
 
@@ -125,6 +134,7 @@ public class PlateauIA extends Plateau{
         this.couleurJoue(positionel(this.getPlateau(), couleur, nbIteration),couleur);
     }
     public Case positionel(Plateau plateau, int couleur, int nbIteration){
+        Case c;
         if(nbIteration > 1){
             int couleurI;
             ArrayList<Case> listeCoupPossible = plateau.getListeBlanc();
@@ -137,13 +147,22 @@ public class PlateauIA extends Plateau{
             }
             Plateau temp =new Plateau();
             int point = 0;
-            Case maxPoint = listeCoupPossible.get(0);
+
             if(!listeCoupPossible.isEmpty()){
+                Case maxPoint = listeCoupPossible.get(0);
                 for(int j = 0; j<listeCoupPossible.size();j++){
                     temp= plateau.getPlateau();
                     temp.couleurJoue(listeCoupPossible.get(j), couleur);
-                    temp.couleurJoue(positionel(temp,couleurI,nbIteration-1),couleurI);
-                    temp.couleurJoue(positionel(temp,couleur,nbIteration-1),couleur);
+                    c = positionel(temp,couleurI,nbIteration-1);
+                    if(c != null)
+                    {
+                        temp.couleurJoue(c,couleurI);
+                        c = positionel(temp,couleur,nbIteration-1);
+                        if(c != null)
+                        {
+                            temp.couleurJoue(c,couleur);
+                        }
+                    }
                     if(couleur == 1){
                         if(temp.getValBlanc() >= point){
                             point = temp.getValBlanc();
@@ -179,7 +198,11 @@ public class PlateauIA extends Plateau{
                 temp.couleurJoue(listeCoupPossible.get(j), couleur);
                 if(nbIteration == 1)
                 {
-                    temp.couleurJoue(positionel(temp,couleur,nbIteration-1),couleur);
+                    c =positionel(temp,couleur,nbIteration-1);
+                    if(c != null)
+                    {
+                        temp.couleurJoue(c,couleurI);
+                    }
                 }
                 if(couleur == 1){
                     if(temp.getValBlanc() >= point){
@@ -196,15 +219,17 @@ public class PlateauIA extends Plateau{
             }
             return maxPoint;
         }
-        System.out.println("liste vide");
+        //System.out.println("liste vide");
         return null;
     }
 
     public void iaMobilite(int couleur, int nbIteration)
     {
-        this.couleurJoue(mobillité(this.getPlateau(), couleur, nbIteration),couleur);
+        this.couleurJoue(mobilite(this.getPlateau(), couleur, nbIteration),couleur);
     }
-    public Case mobillité(Plateau plateau, int couleur, int nbIteration){
+
+    public Case mobilite(Plateau plateau, int couleur, int nbIteration){
+        Case c;
         int couleurI;
         ArrayList<Case> listeCoupPossible = plateau.getListeBlanc();
         if(couleur == 1){
@@ -216,19 +241,29 @@ public class PlateauIA extends Plateau{
         }
         Plateau temp =new Plateau();
         int point = 0;
-        Case maxPoint = listeCoupPossible.get(0);
         if(nbIteration > 1){
             if(!listeCoupPossible.isEmpty()){
+                Case maxPoint = listeCoupPossible.get(0);
                 for(int i = 0; i<listeCoupPossible.size();i++){
+                    //on priorise les coins
                     if(listeCoupPossible.get(i).egal(new Case(0, 0)) || listeCoupPossible.get(i).egal(new Case(0, 7)) || listeCoupPossible.get(i).egal(new Case(7, 0)) || listeCoupPossible.get(i).egal(new Case(7, 7)))
                     {
                         return listeCoupPossible.get(i);
                     }
                     temp= plateau.getPlateau();
                     temp.couleurJoue(listeCoupPossible.get(i), couleur);
-                    temp.couleurJoue(positionel(temp,couleurI,nbIteration-1),couleurI);
-                    temp.couleurJoue(positionel(temp,couleur,nbIteration-1),couleur);
-
+                    c = mobilite(temp,couleurI,nbIteration-1);
+                    if(c!=null)
+                    {
+                        temp.couleurJoue(c,couleurI);
+                        c=mobilite(temp,couleur,nbIteration-1);
+                        if(c!=null)
+                        {
+                            temp.couleurJoue(c,couleur);
+                        }
+                    }
+                    //si l'adversaire ne peut pas jouer au tour suivant on retourne ce coup qui permet d'empecher l'adversaire de jouer
+                    else return listeCoupPossible.get(i);
                     if(couleur == 1){
                         if(temp.getListeBlanc().size() - temp.getListeNoir().size() >= point)
                         {
@@ -248,6 +283,7 @@ public class PlateauIA extends Plateau{
             }
         }
         if(!listeCoupPossible.isEmpty()){
+            Case maxPoint = listeCoupPossible.get(0);
             for(int i = 0; i<listeCoupPossible.size();i++){
                 if(listeCoupPossible.get(i).egal(new Case(0, 0)) || listeCoupPossible.get(i).egal(new Case(0, 7)) || listeCoupPossible.get(i).egal(new Case(7, 0)) || listeCoupPossible.get(i).egal(new Case(7, 7)))
                 {
@@ -255,6 +291,14 @@ public class PlateauIA extends Plateau{
                 }
                 temp = plateau.getPlateau();
                 temp.couleurJoue(listeCoupPossible.get(i), couleur);
+                if(nbIteration > 0)
+                {
+                    c = mobilite(temp, couleurI, nbIteration-1);
+                    if(c!=null)
+                    {
+                        temp.couleurJoue(c,couleurI);
+                    }
+                }
 
                 if(couleur == 1){
                     if(temp.getListeBlanc().size() - temp.getListeNoir().size() >= point)
@@ -274,11 +318,16 @@ public class PlateauIA extends Plateau{
             return maxPoint;
         }
 
-        System.out.println("liste vide");
+        //System.out.println("liste vide");
         return null;
     }
 
-    public Case mixte( int couleur, int nbIteration)
+    public void iaMixte(int couleur, int nbIteration)
+    {
+        this.couleurJoue(mixte( couleur, nbIteration),couleur);
+    }
+
+    public Case mixte(int couleur, int nbIteration)
     {
         if(nbrBlanc + nbrNoir < 20)
         {
@@ -288,6 +337,6 @@ public class PlateauIA extends Plateau{
         {
             return absolu(this.getPlateau(), couleur, nbIteration);
         }
-        return mobillité(this.getPlateau(), couleur, nbIteration);
+        return mobilite(this.getPlateau(), couleur, nbIteration);
     }
 }
