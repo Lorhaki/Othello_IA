@@ -1,7 +1,7 @@
 package classe;
 
 public class Case {
-	int x , y ;
+	private int x , y ;
 
 	
 	public Case() {

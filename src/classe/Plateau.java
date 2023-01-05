@@ -239,7 +239,8 @@ public class Plateau {
 		return true;
 	}
 	
-	
+	//les deux fonctions suivantes permet de savoir si un pion peut être joué à un
+	// emplacement en fonction de la couleur du pion que l'on veut jouer
 	public boolean regardeAutourNoir(int i , int j) {
 		if(i != 0){
 			if(j!=0){
@@ -417,8 +418,6 @@ public class Plateau {
 		return listeBlanc;
 	}
 
-
-
 	public void setListeBlanc(ArrayList<Case> listeBlanc) {
 		this.listeBlanc = listeBlanc;
 	}
@@ -434,7 +433,7 @@ public class Plateau {
 		this.listeNoir = listeNoir;
 	}
 
-	//permet de rechercher à chaque tour les coups possibles pour les pions noirs et les pions noirs
+	//permet de rechercher les coups possibles pour les pions noirs et les pions noirs
 	public void majListesCoupsPossibles(){
 		listeBlanc.clear();
 		listeNoir.clear();

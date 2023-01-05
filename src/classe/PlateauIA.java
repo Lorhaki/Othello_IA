@@ -3,7 +3,7 @@ package classe;
 import java.util.ArrayList;
 
 public class PlateauIA extends Plateau{
-    Joueur ia;
+    private Joueur ia;
 
 
     public PlateauIA(int couleurIa) {
@@ -11,9 +11,26 @@ public class PlateauIA extends Plateau{
         ia = new Joueur(couleurIa);
     }
 
+    public void aléatoire(int couleur)
+    {
+        int rand;
+        if(couleur == 1)
+        {
+            rand = listeBlanc.size();
+            rand = (int) (Math.random() * rand);
+            this.couleurJoue(listeBlanc.get(rand), couleur);
+        }
+        else
+        {
+            rand = listeNoir.size();
+            rand = (int) (Math.random() * rand);
+            this.couleurJoue(listeNoir.get(rand), couleur);
+        }
+
+    }
 
 
-    //on verifie que l'instantciation se passe sans probleme
+    //on verifie que l'instantciation du tableau des valeurs tactiques se passe sans probleme
     public void affichTactiques()
     {
         for(int i=0;i<8;i++)
