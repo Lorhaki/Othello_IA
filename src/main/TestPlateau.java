@@ -5,6 +5,8 @@ import classe.PlateauIA;
 
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
+
+//cette classe permet de run le programme et il suffit de changer les appels de fonctions pour changer les tests que l'on fait
 public class TestPlateau {
 
 	public static void main(String[] args) {
@@ -39,6 +41,7 @@ public class TestPlateau {
 				//au joueur 1 de joueur
 				//othello.joueur1Joue();
 				start = System.nanoTime();
+				//ici on appelle la première fonction à tester
 				othello.iaPositionnel(couleur,nbiteration);
 				end = System.nanoTime();
 				dureeBlanc += (end-start);
@@ -56,6 +59,7 @@ public class TestPlateau {
 				//othello.joueur2Joue();
 				//othello.iaJoue(ia.meilleurCoup(othello, ia.getCouleur(), 3),ia.getCouleur() );
 				start = System.nanoTime();
+				//ici on appelle la première fonction à tester
 				othello.iaPositionnel(couleur,nbiteration);
 				end = System.nanoTime();
 				dureeNoir += (end -start);

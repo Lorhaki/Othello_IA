@@ -10,7 +10,7 @@ public class PlateauIA extends Plateau{
         super();
         ia = new Joueur(couleurIa);
     }
-
+//fonction qui retourne une case aléatoirement
     public void aleatoire(int couleur)
     {
         int rand;
@@ -42,12 +42,12 @@ public class PlateauIA extends Plateau{
             System.out.println();
         }
     }
-
+//permet d'appeler de manière simplifié la fonction d'algorithme Absolu
     public void iaAbsolu(int couleur, int nbIteration)
     {
         this.couleurJoue(absolu(this.getPlateau(), couleur, nbIteration),couleur);
     }
-
+    // fonction de stratégie Absolu
     public Case absolu(Plateau plateau, int couleur, int nbIteration){
         Case c;
         if(nbIteration > 1){
@@ -128,11 +128,12 @@ public class PlateauIA extends Plateau{
         //System.out.println("liste vide");
         return null;
     }
-
+    //permet d'appeler de manière simplifié la fonction d'algorithme Positionnel
     public void iaPositionnel(int couleur, int nbIteration)
     {
         this.couleurJoue(positionel(this.getPlateau(), couleur, nbIteration),couleur);
     }
+    // fonction de stratégie Positionnel
     public Case positionel(Plateau plateau, int couleur, int nbIteration){
         Case c;
         if(nbIteration > 1){
@@ -222,12 +223,12 @@ public class PlateauIA extends Plateau{
         //System.out.println("liste vide");
         return null;
     }
-
+    //permet d'appeler de manière simplifié la fonction d'algorithme Mobilité
     public void iaMobilite(int couleur, int nbIteration)
     {
         this.couleurJoue(mobilite(this.getPlateau(), couleur, nbIteration),couleur);
     }
-
+    // fonction de stratégie Mobilité
     public Case mobilite(Plateau plateau, int couleur, int nbIteration){
         Case c;
         int couleurI;
@@ -326,7 +327,7 @@ public class PlateauIA extends Plateau{
     {
         this.couleurJoue(mixte( couleur, nbIteration),couleur);
     }
-
+    // fonction de stratégie Mixte
     public Case mixte(int couleur, int nbIteration)
     {
         if(nbrBlanc + nbrNoir < 20)
